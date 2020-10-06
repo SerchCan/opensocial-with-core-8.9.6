@@ -1,51 +1,51 @@
 {
-    "name": "goalgorilla/social_template",
-    "description": "Social project template for composer based Open Social projects.",
+    "name": "drupal/legacy-project",
+    "description": "Project template for Drupal 8 projects with composer following drupal/drupal layout",
     "type": "project",
-    "license": "GPL-2.0+",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require": {
-        "composer/installers": "^1.0",
-        "drupal-composer/drupal-scaffold": "^2.6.1",
-        "cweagans/composer-patches": "^1.0",
-        "goalgorilla/open_social": "~9.0",
-        "php": "^7.2",
-        "monolog/monolog": "^1.17",
-        "drush/drush": "^10.3"
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.drupal.org/project/drupal",
+    "support": {
+        "docs": "https://www.drupal.org/docs/user_guide/en/index.html",
+        "chat": "https://www.drupal.org/node/314178"
     },
     "repositories": [
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
-        },
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
         }
     ],
-    "scripts": {
-      "post-install-cmd": [
-        "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
-      ],
-      "post-update-cmd": [
-        "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
-      ]
+    "require": {
+        "composer/installers": "^1.2",
+        "drupal/address": "^1.8",
+        "drupal/core-composer-scaffold": "^8.8",
+        "drupal/core-project-message": "^8.8",
+        "drupal/core-recommended": "^8.8",
+        "drupal/core-vendor-hardening": "^8.8",
+        "drush/drush": "^10.3"
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
     },
     "extra": {
-        "installer-types": [
-            "bower-asset",
-            "npm-asset"
-        ],
+        "drupal-scaffold": {
+            "locations": {
+                "web-root": "./html"
+            }
+        },
         "installer-paths": {
             "html/core": [
-                "drupal/core"
+                "type:drupal-core"
+            ],
+            "html/libraries/{$name}": [
+                "type:drupal-library"
             ],
             "html/modules/contrib/{$name}": [
                 "type:drupal-module"
-            ],
-            "html/profiles/contrib/social": [
-                "goalgorilla/open_social"
             ],
             "html/profiles/contrib/{$name}": [
                 "type:drupal-profile"
@@ -53,15 +53,36 @@
             "html/themes/contrib/{$name}": [
                 "type:drupal-theme"
             ],
-            "html/libraries/{$name}": [
-                "type:drupal-library",
-                "type:bower-asset",
-                "type:npm-asset"
-            ],
-            "drush/contrib/{$name}": [
+            "drush/Commands/contrib/{$name}": [
                 "type:drupal-drush"
+            ],
+            "html/modules/custom/{$name}": [
+                "type:drupal-custom-module"
+            ],
+            "html/themes/custom/{$name}": [
+                "type:drupal-custom-theme"
             ]
         },
-        "enable-patching": true
+        "drupal-core-project-message": {
+            "include-keys": [
+                "homepage",
+                "support"
+            ],
+            "post-create-project-cmd-message": [
+                "<bg=blue;fg=white>                                                         </>",
+                "<bg=blue;fg=white>  Congratulations, you’ve installed the Drupal codebase  </>",
+                "<bg=blue;fg=white>  from the drupal/legacy-project template!               </>",
+                "<bg=blue;fg=white>                                                         </>",
+                "",
+                "<bg=yellow;fg=black>Next steps</>:",
+                "  * Install the site: https://www.drupal.org/docs/8/install",
+                "  * Read the user guide: https://www.drupal.org/docs/user_guide/en/index.html",
+                "  * Get support: https://www.drupal.org/support",
+                "  * Get involved with the Drupal community:",
+                "      https://www.drupal.org/getting-involved",
+                "  * Remove the plugin that prints this message:",
+                "      composer remove drupal/core-project-message"
+            ]
+        }
     }
 }
